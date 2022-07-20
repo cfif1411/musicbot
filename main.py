@@ -1,5 +1,4 @@
 import os
-
 import telebot
 from pytube import YouTube
 
@@ -48,8 +47,15 @@ def download(message):
 
 def search_text(text):
     if 'http' not in text.text:
-        driver = webdriver.Chrome(
-            executable_path='C://Users//Sasha Shpakovskiy//PycharmProjects//telegram_bot//selenium brouser//chromedriver.exe')
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--disable-dev-shm-usage")
+        chrome_options.add_argument("--no-sandbox")
+        driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+
+        # driver = webdriver.Chrome(
+        #     executable_path='C://Users//Sasha Shpakovskiy//PycharmProjects//telegram_bot//selenium brouser//chromedriver.exe')
         url = f'https://www.youtube.com/results?search_query={"+".join(text.text.split())}'
         driver.get(url)
         html = driver.page_source
