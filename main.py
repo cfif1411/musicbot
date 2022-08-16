@@ -28,10 +28,12 @@ def download(message):
 
     try:
         bot.send_message(message.chat.id, 'Start download music!')
-        yt.streams.get_by_itag(iTagHighestResVideo).download(output_path='C:/Users/Sasha Shpakovskiy/Desktop',filename=f'{yt.title}.mp3')
+        yt.streams.get_by_itag(iTagHighestResVideo).download(output_path='C:/Users/Sasha Shpakovskiy/Desktop',
+                                                             filename=f'{yt.title}.mp3')
     except:
         print('This music is not download!')
     print(f'{yt.title} download is pc!')
+
     try:
         bot.send_message(message.chat.id, 'Start send message!')
         audio = open(f'C:/Users/Sasha Shpakovskiy/Desktop/{yt.title}.mp3', 'rb')
@@ -39,23 +41,16 @@ def download(message):
         audio.close()
         os.remove(path=f'C:/Users/Sasha Shpakovskiy/Desktop/{yt.title}.mp3')
 
+
     except:
         print('Do not download audio!')
 
 
-
-
 def search_text(text):
     if 'http' not in text.text:
-        chrome_options = webdriver.ChromeOptions()
-        chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-        chrome_options.add_argument("--headless")
-        chrome_options.add_argument("--disable-dev-shm-usage")
-        chrome_options.add_argument("--no-sandbox")
-        driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
 
-        # driver = webdriver.Chrome(
-        #     executable_path='C://Users//Sasha Shpakovskiy//PycharmProjects//telegram_bot//selenium brouser//chromedriver.exe')
+        driver = webdriver.Chrome(
+            executable_path='C://Users//Sasha Shpakovskiy//PycharmProjects//telegram_bot//selenium brouser//chromedriver.exe')
         url = f'https://www.youtube.com/results?search_query={"+".join(text.text.split())}'
         driver.get(url)
         html = driver.page_source
